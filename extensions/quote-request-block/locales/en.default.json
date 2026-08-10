@@ -1,0 +1,10 @@
+{
+  "quote_request": {
+    "name": "Request a Quote",
+    "settings": {
+      "button_label": {
+        "label": "Button label"
+      }
+    }
+  }
+}

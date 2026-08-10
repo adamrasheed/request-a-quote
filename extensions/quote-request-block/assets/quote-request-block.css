@@ -1,0 +1,112 @@
+.raq-block {
+  margin: 16px 0;
+}
+
+.raq-block__button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #ffffff;
+  background-color: #202223;
+  border: 1px solid #202223;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.raq-block__button--primary {
+  background-color: #2c6ecb;
+  border-color: #2c6ecb;
+}
+
+.raq-block__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.raq-block__modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.raq-block__modal-panel {
+  position: relative;
+  width: min(480px, 92vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.raq-block__modal-panel h2 {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.raq-block__modal-panel form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.raq-block__modal-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.raq-block__modal-panel input,
+.raq-block__modal-panel textarea {
+  padding: 8px 10px;
+  border: 1px solid #c9cccf;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.raq-block__error {
+  color: #b30000;
+  font-size: 14px;
+  margin: 0;
+}
+
+.raq-block__success {
+  color: #007f5f;
+  font-size: 14px;
+  margin: 0;
+}
+
+.raq-block__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.raq-block__actions button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.raq-block__actions button[data-raq-close] {
+  background: transparent;
+  border: 1px solid #c9cccf;
+  color: #202223;
+}
+
+.raq-block__actions button[type="submit"] {
+  color: #ffffff;
+  background-color: #2c6ecb;
+  border: 1px solid #2c6ecb;
+}

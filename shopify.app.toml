@@ -1,0 +1,54 @@
+# PRODUCTION config — the Shopify Partner app record that merchants install.
+# NEVER run `shopify app dev` against this file (it re-points the prod app URL).
+# Create/link the Partner app once with: npm run config:link -- --config shopify.app.toml
+#
+# Keep this file and shopify.app.request-a-quote-dev.toml IDENTICAL except
+# client_id / application_url / redirect_urls.
+client_id = "REPLACE_WITH_PARTNER_APP_CLIENT_ID"
+
+name = "Request a Quote"
+application_url = "https://REPLACE_WITH_PRODUCTION_URL"
+embedded = true
+
+[auth]
+redirect_urls = [
+  "https://REPLACE_WITH_PRODUCTION_URL/auth/callback",
+  "https://localhost/auth/callback",
+]
+
+[access_scopes]
+# write_draft_orders : the entire Quote → Draft Order flow
+#                     (draftOrderCreate / draftOrderUpdate / draftOrderInvoiceSend).
+# read_products      : product picker for "selected products" eligibility, variant
+#                     verification on quote submission, and current-price checks
+#                     when converting a quote into a Draft Order.
+scopes = "write_draft_orders,read_products"
+
+[build]
+# Intentionally empty. `shopify app deploy` strips `include_config_on_deploy`
+# (config is always included in current CLI versions).
+
+[webhooks]
+api_version = "2026-07"
+
+  # Handled by: /app/routes/webhooks.app.uninstalled.tsx
+  [[webhooks.subscriptions]]
+  topics = ["app/uninstalled"]
+  uri = "/webhooks/app/uninstalled"
+
+  # Handled by: /app/routes/webhooks.app.scopes_update.tsx
+  [[webhooks.subscriptions]]
+  topics = ["app/scopes_update"]
+  uri = "/webhooks/app/scopes_update"
+
+  # Handled by: /app/routes/webhooks.app_subscriptions.update.tsx
+  # (reconciles managed-billing plan state onto the shop row)
+  [[webhooks.subscriptions]]
+  topics = ["app_subscriptions/update"]
+  uri = "/webhooks/app_subscriptions/update"
+
+  # Mandatory compliance topics (App Store requirement). Handled by
+  # /app/routes/webhooks.gdpr.tsx. These use `compliance_topics`, not `topics`.
+  [[webhooks.subscriptions]]
+  compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
+  uri = "/webhooks/gdpr"

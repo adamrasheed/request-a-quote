@@ -1,0 +1,11 @@
+package.json
+.shadowenv.d
+.vscode
+node_modules
+public
+.shopify
+build
+.react-router
+extensions/*/dist
+extensions/*/generated
+extensions/*/schema.graphql

@@ -1,0 +1,40 @@
+# DEV config — `npm run dev` targets this file. The dev Partner app record is
+# the one you register on a development store.
+#
+# Keep this file and shopify.app.toml IDENTICAL except client_id /
+# application_url / redirect_urls. `shopify app config link` fills in the dev
+# client_id the first time.
+client_id = "REPLACE_WITH_DEV_PARTNER_APP_CLIENT_ID"
+
+name = "Request a Quote (Dev)"
+application_url = "https://localhost"
+embedded = true
+
+[auth]
+redirect_urls = ["https://localhost/auth/callback"]
+
+[access_scopes]
+# Identical to production — see shopify.app.toml for the rationale.
+scopes = "write_draft_orders,read_products"
+
+[build]
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2026-07"
+
+  [[webhooks.subscriptions]]
+  topics = ["app/uninstalled"]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = ["app/scopes_update"]
+  uri = "/webhooks/app/scopes_update"
+
+  [[webhooks.subscriptions]]
+  topics = ["app_subscriptions/update"]
+  uri = "/webhooks/app_subscriptions/update"
+
+  [[webhooks.subscriptions]]
+  compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
+  uri = "/webhooks/gdpr"

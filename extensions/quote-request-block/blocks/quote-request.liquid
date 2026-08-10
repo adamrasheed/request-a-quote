@@ -1,0 +1,88 @@
+{%- liquid
+  assign quote_product_id = product.id
+  assign quote_default_variant = product.selected_or_first_available_variant
+-%}
+
+<div
+  class="raq-block"
+  data-raq-block
+  data-raq-product="{{ quote_product_id }}"
+  data-raq-default-variant="{{ quote_default_variant.id }}"
+  {{ block.shopify_attributes }}
+>
+  <button type="button" class="raq-block__button" data-raq-open hidden>
+    {{ block.settings.button_label | default: 'Request a Quote' }}
+  </button>
+
+  <div class="raq-block__modal" data-raq-modal hidden role="dialog" aria-modal="true" aria-labelledby="raq-modal-title">
+    <div class="raq-block__modal-backdrop" data-raq-close></div>
+    <div class="raq-block__modal-panel">
+      <h2 id="raq-modal-title">Request a Quote</h2>
+
+      <form data-raq-form novalidate>
+        <input type="hidden" name="variant_id" data-raq-variant />
+        <input type="hidden" name="client_request_id" data-raq-request-id />
+
+        <label>
+          <span>Name</span>
+          <input type="text" name="customer_name" required />
+        </label>
+
+        <label>
+          <span>Email</span>
+          <input type="email" name="customer_email" required />
+        </label>
+
+        <label data-raq-company hidden>
+          <span>Company</span>
+          <input type="text" name="customer_company" />
+        </label>
+
+        <label data-raq-phone hidden>
+          <span>Phone</span>
+          <input type="tel" name="customer_phone" />
+        </label>
+
+        <label>
+          <span>Quantity</span>
+          <input type="number" name="quantity" min="1" value="1" required />
+        </label>
+
+        <label>
+          <span>Notes</span>
+          <textarea name="notes" rows="3"></textarea>
+        </label>
+
+        <p class="raq-block__error" data-raq-error hidden></p>
+        <p class="raq-block__success" data-raq-success hidden></p>
+
+        <div class="raq-block__actions">
+          <button type="button" data-raq-close>Cancel</button>
+          <button type="submit" class="raq-block__button raq-block__button--primary">Submit request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'quote-request-block.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "t:quote_request.name",
+  "target": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "stylesheet": "quote-request-block.css",
+  "javascript": "quote-request-block.js",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:quote_request.settings.button_label.label",
+      "default": "Request a Quote"
+    }
+  ]
+}
+{% endschema %}
